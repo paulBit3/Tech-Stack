@@ -18,14 +18,17 @@
     "@babel/preset-env": "^7.12.17",
     "@babel/preset-react": "^7.12.13",
     "babel-loader": "^8.2.2",
+    "file-loader": "^6.2.0",
     "nodemon": "^2.0.7",
     "webpack": "^5.23.0",
     "webpack-cli": "^4.5.0",
     "webpack-node-externals": "^2.5.2"
   },
   "dependencies": {
+    "@hot-loader/react-dom": "^17.0.1",
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
+    "add": "^2.0.6",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.5",
@@ -41,6 +44,9 @@
     "react-dom": "^17.0.1",
     "react-hot-loader": "^4.13.0",
     "react-router": "^5.2.0",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "webpack-dev-middleware": "^4.1.0",
+    "webpack-hot-middleware": "^2.25.0",
+    "yarn": "^1.22.10"
   }
 }

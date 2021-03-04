@@ -13,7 +13,7 @@ const config = {
     devtool: 'eval-source-map',
     entry: [
         'webpack-hot-middleware/client?reload=true',
-        path.join(CURRENT_WORKING_DIR , 'frontend/client/main.js')
+        path.join(CURRENT_WORKING_DIR , 'frontend/client/index.js')
     ],
     output: {
         filename: 'bundle.js',
@@ -38,6 +38,10 @@ const config = {
                 use: [
                     'babel-loader'
                 ]
+            },
+            {
+                test:/\.(ttf|eot|svg|gif|jpg|png)(\?[\s\S]+)?$/,
+                use: 'file-loader'
             }
         ]
     },

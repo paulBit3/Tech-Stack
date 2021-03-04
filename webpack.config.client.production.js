@@ -9,7 +9,7 @@ const CURRENT_WORKING_DIR = process.cwd();
 const config = {
     mode: "production",
     entry: [
-        path.join(CURRENT_WORKING_DIR , 'frontend/client/main.js')
+        path.join(CURRENT_WORKING_DIR , 'frontend/client/index.js')
     ],
     output: {
         path: path.join(CURRENT_WORKING_DIR , '/dist'),
@@ -24,6 +24,10 @@ const config = {
                 use: [
                     'babel-loader'
                 ]
+            },
+            {
+                test:/\.(ttf|eot|svg|gif|jpg|png)(\?[\s\S]+)?$/,
+                use: 'file-loader'
             }
         ]
     }

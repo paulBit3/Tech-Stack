@@ -1,5 +1,5 @@
 /* compiling the React code using Webpack configurations while in dev mode */
-import config from '../../../config/config'
+import config from '../../config/config'
 import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
