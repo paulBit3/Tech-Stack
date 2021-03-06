@@ -1,6 +1,6 @@
 /*
 this helper will help to manage auth state 
-the way of storing, retrieving and deleting JWT */
+the way of storing, retrieving and deleting JWT credentials on the client-side */
 
 import { signout } from "../api-fetching/api-auth"
 

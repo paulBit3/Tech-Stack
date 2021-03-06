@@ -15,7 +15,7 @@ function  auth controller function.
 We implement user auth using JSON Web Tokens*/
 
 //API endpoint to sign in a user
-const signin = async (req, res) => {
+const login = async (req, res) => {
     try {
         //POST request receive the email and password
         let user = await User.findOne({ 
@@ -55,7 +55,7 @@ const signin = async (req, res) => {
     } catch (err) {
         
         return res.status(401).json({
-            error: "Could not sign in"
+            error: "Could not login"
         })
 
     }
@@ -64,7 +64,7 @@ const signin = async (req, res) => {
 //API endpoint to signout a user
 /* when Express app gets a GET request '/auth/signout',
  it execute the signout controller function */
-const signout = (req, res) => {
+const logout = (req, res) => {
     res.clearCookie("t")
     return res.status(200).json({
         message: "you are logged out."
@@ -99,8 +99,8 @@ const hasAuthorization = (req, res, next) => {
 
 
 export default {
-    signin,
-    signout,
+    login,
+    logout,
     requireSignin,
     hasAuthorization
 }

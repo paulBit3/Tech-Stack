@@ -13,14 +13,14 @@ const expressJwt =  require('express-jwt');
 
 const router = express.Router()
 
-router.route('/auth/signin').post(authCtrl.signin)
+router.route('/auth/login').post(authCtrl.login)
 
-  router.route('/auth/signout').get(authCtrl.signout)
+router.route('/auth/logout').get(authCtrl.logout)
 
 
-  expressJwt({
-    secret: config.jwtSecret,
-    algorithms: ['sha1', 'RS256', 'HS256'],
-  })
+expressJwt({
+  secret: config.jwtSecret,
+  algorithms: ['sha1', 'RS256', 'HS256'],
+})
 
 export default router
