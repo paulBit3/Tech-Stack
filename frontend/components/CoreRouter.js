@@ -3,7 +3,8 @@
 
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Header from '../components/Header';
+import Header from './Header';
+import Users from './Users';
 
 
 
@@ -19,6 +20,7 @@ const CoreRouter = () => {
         <div>
             <Switch>
                 <Route exact path="/" component={Header} />
+                <Route path="/users" component={Users}/>
             </Switch>
         </div>
     )
