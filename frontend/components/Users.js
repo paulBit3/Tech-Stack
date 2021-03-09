@@ -18,7 +18,8 @@ import {list} from "./api-user.js"
 
 
 
-
+/* Style declaration to define css styles(CSS-in-JS) for the component.
+    makeStyles is a custom React hook API */
 const useStyles = makeStyles(theme => ({
     root: theme.mixins.gutters({
         padding: theme.spacing(1),

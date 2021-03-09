@@ -4,6 +4,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Header from './Header';
+import Signup from './Signup';
 import Users from './Users';
 
 
@@ -20,7 +21,15 @@ const CoreRouter = () => {
         <div>
             <Switch>
                 <Route exact path="/" component={Header} />
-                <Route path="/users" component={Users}/>
+
+                {/* to add the User component to the App */}
+                <Route path="/users" component={Users} />
+
+                {/* to add the Signup component to the App */}
+                <Route path="/signup" component={Signup} />
+
+                {/* to add the Signin component to the App */}
+                <Route path="/signin" component={Signin} />
             </Switch>
         </div>
     )
