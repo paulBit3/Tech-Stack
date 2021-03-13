@@ -1,21 +1,19 @@
-import { useState } from "react";
-import Avatar from "@material-ui/core/Avatar";
-import CssBaseline from "@material-ui/core/CssBaseline";
+import { useState } from 'react';
+import Avatar from '@material-ui/core/Avatar';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Typography from "@material-ui/core/Typography";
-import Icon from '@material-ui/core/Icon'
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Button from "@material-ui/core/Button";
+import Typography from '@material-ui/core/Typography';
+import Icon from '@material-ui/core/Icon';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import Box from '@material-ui/core/Box';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { makeStyles } from "@material-ui/core/styles";
-
-
+import { makeStyles } from '@material-ui/core/styles';
 import {create} from '../client/api-fetching/api-user.js';
 
 
@@ -42,6 +40,10 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(1),
         backgroundColor: theme.palette.secondary.main,
     },
+    form: {
+        width: '100%', // Fix IE 11 issue.
+        marginTop: theme.spacing(3),
+      },
     title: {
         marginTop: theme.spacing(2),
         color: theme.palette.openTitle,
@@ -171,10 +173,11 @@ export default function Signup() {
                             label=" I agree with Oficy Inc.'s terms of service and privacy policy" 
                         />
                         </Grid>
+                        <br/>
                         {
-                            values.error && (<Typography component="p" color="error">
-                                <Icon color="error" className={classes.error}>error</Icon>
-                                {values.error}</Typography>)
+                        values.error && (<Typography component="p" color="error">
+                            <Icon color="error" className={classes.error}>error</Icon>
+                            {values.error}</Typography>)
                         }
                     </Grid>
                     <Button
@@ -190,7 +193,7 @@ export default function Signup() {
                     <Grid container justify="flex-end">
                         <Grid item>
                         Already have an account?
-                            <Link href="#" variant="body2">
+                            <Link to="/signin" variant="body2">
                               Login
                             </Link>
                         </Grid>

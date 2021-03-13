@@ -4,8 +4,11 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Header from './Header';
-import Signup from './Signup';
 import Users from './Users';
+import Signup from './Signup';
+import Signin from './Signin';
+import Profile from './Profile';
+import EditProfile from '/EditProfile';
 
 
 
@@ -30,6 +33,13 @@ const CoreRouter = () => {
 
                 {/* to add the Signin component to the App */}
                 <Route path="/signin" component={Signin} />
+
+                {/* to add the Edit Profile component to the App. edit path is matched 1st */}
+                <Route path="/user/edit/:userId" component={EditProfile} />
+
+                {/* to add the Profile component to the App */}
+                <Route path="/user/:userId" component={Profile} />
+                
             </Switch>
         </div>
     )
