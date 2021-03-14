@@ -23,29 +23,28 @@ import read from './../client/api-fetching/api-user.js'
 
 /* Style declaration to define css styles(CSS-in-JS) for the component.
     makeStyles is a custom React hook API */
-    const useStyles = makeStyles((theme) => ({
-        root: theme.mixins.gutters({
-            maxWidth: 600,
-            margin: 'auto',
-            padding: theme.spacing(3),
-            marginTop: theme.spacing(3)
-        }),
-
-        paper: {
-            marginTop: theme.spacing(8),
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-        },
-        avatar: {
-            margin: theme.spacing(1),
-            backgroundColor: theme.palette.secondary.main,
-        },
-        title: {
-            marginTop: theme.spacing(2),
-            color: theme.palette.openTitle,
-        },
-    }));
+const useStyles = makeStyles((theme) => ({
+    root: theme.mixins.gutters({
+        maxWidth: 600,
+        margin: 'auto',
+        padding: theme.spacing(3),
+        marginTop: theme.spacing(3)
+    }),
+    paper: {
+        marginTop: theme.spacing(8),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    avatar: {
+        margin: theme.spacing(1),
+        backgroundColor: theme.palette.secondary.main,
+    },
+    title: {
+        marginTop: theme.spacing(2),
+        color: theme.palette.openTitle,
+    },
+}));
     
 
 //our copyright function

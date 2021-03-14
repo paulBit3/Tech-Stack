@@ -3,12 +3,13 @@
 
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Header from './Header';
+import Home from './Home';
 import Users from './Users';
 import Signup from './Signup';
 import Signin from './Signin';
 import Profile from './Profile';
-import EditProfile from '/EditProfile';
+import EditProfile from './EditProfile';
+import Header from './Header'
 
 
 
@@ -22,8 +23,9 @@ import EditProfile from '/EditProfile';
 const CoreRouter = () => {
     return (
         <div>
+            <Header/>
             <Switch>
-                <Route exact path="/" component={Header} />
+                <Route exact path="/" component={Home} />
 
                 {/* to add the User component to the App */}
                 <Route path="/users" component={Users} />
