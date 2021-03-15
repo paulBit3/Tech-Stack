@@ -14,12 +14,23 @@ import Template from '../../template';
 //import { Template } from 'webpack';
 
 //importing routes
-import userRoutes from './routes/user.routes'
-import authRoutes from './routes/auth.routes'
+import userRoutes from './routes/user.routes';
+import authRoutes from './routes/auth.routes';
 // import { UnauthorizedError } from 'express-jwt/lib';
 
+
+/* modules for server side rendering */
+import React from 'react';
+import ReactDOMServer from 'react-dom/server';
+import StaticRouter from 'react-router-dom/StaticRouter';
+import CoreRouter from '../../components/CoreRouter';
+//module to generate the CSS styles for the frontend component
+import { ServerStyleSheets, ThemeProvider } from '@material-ui/styles';
+import theme from '../../components/Theme';
+
+
 //for devmode only. Comment out in production
-import devBundle from './devBundle'
+import devBundle from './devBundle';
 
 
 
