@@ -1,5 +1,5 @@
 import React from 'react';
-import CoreRouter from '../components/CoreRouter';
+import CoreRouter from './CoreRouter';
 
 /* wrapping root component with themeprovider and browserrouter */
  
@@ -21,9 +21,17 @@ import { hot } from 'react-hot-loader'
 
 
 const App = () => {
+    //removing the server-side injected CSS when the root React component mounts
+    React.useEffect(() => {
+        const jssStyles = document.querySelector('#jss-server-side')
+        if (jssStyles) {
+            jssStyles.parentNode.removeChild(jssStyles)
+        }
+    }, [])
     return (
         <BrowserRouter>
           <ThemeProvider theme={theme}>
+              
               <CoreRouter/>
           </ThemeProvider>
         </BrowserRouter>

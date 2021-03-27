@@ -31,7 +31,16 @@ const config =  {
                 use: 'file-loader'
             }
         ]
-    }
+    },
+    devServer: {
+        contentBase: path.join(__dirname, 'public'),
+        watchContentBase: true,
+        publicPath: "/dist/",
+        historyApiFallback: true,
+        hot: true,
+        inline: true,
+        port: 3000,
+    },
 }
 
 module.exports = config

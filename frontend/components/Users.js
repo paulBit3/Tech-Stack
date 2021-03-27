@@ -1,6 +1,6 @@
 /* this component will display the names of all users fetched from the db 
    and we will use the built-in React Hook useState to add state to our function */
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import Paper from "@material-ui/core/Paper"
 import List from "@material-ui/core/List"
@@ -14,7 +14,7 @@ import Typography from "@material-ui/core/Typography"
 import ArrowForward from "@material-ui/icons/ArrowForward"
 import Person from "@material-ui/icons/Person"
 import {Link} from "react-router-dom"
-import {list} from "./api-user.js"
+import {list} from "./../client/api-fetching/api-user.js"
 
 
 

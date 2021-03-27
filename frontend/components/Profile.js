@@ -15,8 +15,9 @@ import Typography from '@material-ui/core/Typography';
 import Edit from '@material-ui/icons/Edit';
 import Person from '@material-ui/icons/Person';
 import Divider from '@material-ui/core/Divider';
+
 import auth from './../client/helpers/auth-helpers';
-import read from './../client/api-fetching/api-user.js'
+import {read} from './../client/api-fetching/api-user.js'
 
 
 

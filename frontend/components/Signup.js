@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -8,12 +8,17 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
+import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
+import { green } from '@material-ui/core/colors';
+import Container from '@material-ui/core/Container';
 import {create} from '../client/api-fetching/api-user.js';
 
 
@@ -51,13 +56,30 @@ const useStyles = makeStyles((theme) => ({
     textField: {
         marginLeft: theme.spacing(1),
         marginRight: theme.spacing(1),
-        width: 300
+        
     },
+    checked: {
+        '&, & + $label': {
+            color: 'blue',
+        },
+    },
+    label: {},
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
+    //checked: {},
 }));
 
+const GreenCheckbox = withStyles({
+    root: {
+      color: green[400],
+      '&$checked': {
+        color: green[600],
+      },
+    },
+    checked: {},
+  })((props) => <Checkbox color="default" {...props} />);
+  
 
 //our copyright function
 function Copyright(){
@@ -70,7 +92,7 @@ function Copyright(){
             {'.'}
         </Typography>
     );
-}
+};
 
 
 
@@ -78,106 +100,131 @@ function Copyright(){
 
 //our component definition
 export default function Signup() {
-    const classes = useStyles()
+    const classes = useStyles();
     //initializing the state using the useState hook
-    const [values, setValues] = useState({
+    const [state, setState] = useState({
         name: '',
         password: '',
         email: '',
         open: false,
-        error: ''
-    })
+        error: '',
+        checkedA: true,
+    });
    
     /* defining our handler functions to be called */
 
     //this function takes the new value in the input and sets it as the state
-    const handleChange= name => event => {
-        setValues({ ...values, [name]: event.target.value })
-    }
+   /*  */
+    const handleInputChange =  (event) => {
+        const {name, value } = event.target;
+        setState({ 
+            ...state, 
+            [name]: value,
+        });
+    };
+    
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setState({ 
+            ...state, 
+            [name]: value.checked, 
+        });
+    };
+    
 
     //this function takes the input value from the state and calls the 
     // create fetch method to signup the user with the backend
     const clickSubmit = () => {
         const user = {
-            name: values.name || undefined,
-            email: values.email || undefined,
-            password: values.password || undefined
+            name: state.name || undefined,
+            email: state.email || undefined,
+            password: state.password || undefined
         }
         create(user).then((data) => {
             if (data.error) {
-                setValues({ ...values, error: data.error})
+                setState({ ...state, error: data.error})
             } else {
-                setValues({ ...values, error: '', open: true})
+                setState({ ...state, error: '', open: true})
             }
-        })
-    }
+        });
+    };
 
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
-                    <LockOpenOutlined />
+                    <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5" className={classes.title}>
                     Sign up
                 </Typography>
                 <form className={classes.form}>
                     <Grid container spacing={2}>
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12}>
                             <TextField
-                            autoComplete="fname"
-                            name="fullName"
                             variant="outlined"
                             required
                             fullWidth
                             id="name"
-                            className={classes.textField}
                             label="Full Name"
-                            value={values.name}
-                            onChange={handleChange('name')}
-                            autoFocus />
+                            value={state.name}
+                            onChange={handleInputChange}
+                            name="fullName"
+                            autoComplete="fname"
+                            InputLabelProps={{ shrink: true }}
+                            autoFocus
+                            />
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
-                            autoComplete="email"
-                            name="email"
                             variant="outlined"
                             required
                             fullWidth
                             id="email"
-                            className={classes.textField}
                             label="Email Address"
-                            value={values.email}
-                            onChange={handleChange('email')}
-                            autoFocus />
+                            value={state.email}
+                            onChange={handleInputChange}
+                            name="email"
+                            autoComplete="email"
+                            InputLabelProps={{ shrink: true }} 
+                            />
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
-                            autoComplete="current-password"
-                            name="password"
                             variant="outlined"
                             required
                             fullWidth
                             type="password"
                             id="password"
-                            className={classes.textField}
                             label="Password"
-                            value={values.password}
-                            onChange={handleChange('password')}
-                            autoFocus />
+                            value={state.password}
+                            onChange={handleInputChange}
+                            name="password"
+                            autoComplete="current-password"
+                            InputLabelProps={{ shrink: true }} 
+                            />
                         </Grid>
                         <Grid item xs={12}>
                             <FormControlLabel
-                            control={<Checkbox value="agree" color="primary" />} 
-                            label=" I agree with Oficy Inc.'s terms of service and privacy policy" 
-                        />
+                              value="agree"
+                              control={
+                                <Checkbox  
+                                 color="primary" 
+                                 checked={state.checkedA}
+                                 onChange={handleChange}
+                                 name="checkedA"
+                                />
+                              } 
+                              label="I agree with Oficy Inc.'s terms of service and privacy policy" 
+                            />
                         </Grid>
                         <br/>
                         {
-                        values.error && (<Typography component="p" color="error">
+                        state.error && (<Typography component="p" color="error">
                             <Icon color="error" className={classes.error}>error</Icon>
-                            {values.error}</Typography>)
+                            {state.error}</Typography>)
                         }
                     </Grid>
                     <Button
@@ -192,14 +239,14 @@ export default function Signup() {
                         </Button>
                     <Grid container justify="flex-end">
                         <Grid item>
-                        Already have an account?
-                            <Link to="/signin" variant="body2">
+                            Already have an account?
+                            <Link href="/signin" variant="body2">
                               Login
                             </Link>
                         </Grid>
                     </Grid>
                 </form>
-                <Dialog open={values.open} disableBackdropClick={true}>
+                <Dialog open={state.open} disableBackdropClick={true}>
                     <DialogTitle>New Account</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
@@ -218,5 +265,5 @@ export default function Signup() {
             {/* calling copyright function here */}
             <Box mt={5}><Copyright /></Box>
         </Container>
-    )
+    );
 }

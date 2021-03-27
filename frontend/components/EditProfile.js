@@ -10,12 +10,12 @@ import ListItem from '@material-ui/core/CardContent';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import Edit from '@material-ui/icons/Icon';
+import Icon from '@material-ui/core/Icon';
 import Person from '@material-ui/icons/Person';
 import Divider from '@material-ui/core/Divider';
 import auth from './../client/helpers/auth-helpers';
 import {read, update} from './../client/api-fetching/api-user.js'
-import { CssBaseline, TextField } from '@material-ui/core';
+// import { CssBaseline, TextField } from '@material-ui/core';
 
 
 /* Style declaration to define css styles(CSS-in-JS) for the component.

@@ -1,19 +1,22 @@
 /* this component will render at the /signin path */ 
 
-import { useState } from "react"
-import Avatar from "@material-ui/core/Avatar"
-import CssBaseline from "@material-ui/core/CssBaseline"
-import TextField from '@material-ui/core/TextField'
-import Typography from '@material-ui/core/Typography'
-import Icon from '@material-ui/core/Icon'
-import FormControlLabel from "@material-ui/core/FormControlLabel"
-import Checkbox from "@material-ui/core/Checkbox"
-import Button from "@material-ui/core/Button"
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
-import { makeStyles } from "@material-ui/core/styles"
+import React, { useState } from "react";
+import Avatar from "@material-ui/core/Avatar";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+import Icon from '@material-ui/core/Icon';
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import Button from "@material-ui/core/Button";
+import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import { makeStyles } from "@material-ui/core/styles";
+import Container from '@material-ui/core/Container';
 
-
-import {login} from '../client/api-fetching/api-auth.js'
+import {login} from '../client/api-fetching/api-auth.js';
 
 
 
@@ -32,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         alignItems: 'center',
     },
+
     error: {
         verticalAlign: 'middle'
     },
@@ -50,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
     textField: {
         marginLeft: theme.spacing(1),
         marginRight: theme.spacing(1),
-        width: 300
+        
     },
     submit: {
         margin: theme.spacing(3, 0, 2),
@@ -119,6 +123,7 @@ export default function Signin(props) {
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
+            
             <div className={classes.paper}>
                <Avatar className={classes.avatar}>
                    <LockOutlinedIcon />
@@ -137,10 +142,10 @@ export default function Signin(props) {
                             required
                             fullWidth
                             id="email"
-                            className={classes.textField}
                             label="Email Address"
                             value={values.email}
                             onChange={handleChange('email')}
+                            InputLabelProps={{ shrink: true }} 
                             autoFocus />
                         </Grid>
                         <Grid item xs={12}>
@@ -152,18 +157,13 @@ export default function Signin(props) {
                             fullWidth
                             type="password"
                             id="password"
-                            className={classes.textField}
                             label="Password"
                             value={values.password}
                             onChange={handleChange('password')}
-                            autoFocus />
+                            InputLabelProps={{ shrink: true }} 
+                            />
                         </Grid>
-                        <Grid item xs={12}>
-                            <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />} 
-                            label="Remember me on this device" 
-                        />
-                        </Grid>
+
                         {
                             values.error && (<Typography component="p" color="error">
                                 <Icon color="error" className={classes.error}>error</Icon>
@@ -187,8 +187,9 @@ export default function Signin(props) {
                             </Link>
                         </Grid>
                         <Grid item xs>
-                            <Link to="/signup" variant="body2">
-                              Don't have an account? Sign Up
+                            Don't have an account?
+                            <Link href="/signup" variant="body2">
+                              Sign Up
                             </Link>
                         </Grid>
                     </Grid>
@@ -197,7 +198,7 @@ export default function Signin(props) {
             {/* calling copyright function here */}
             <Box mt={5}><Copyright /></Box>
         </Container>
-    )
+    );
 
 
 }

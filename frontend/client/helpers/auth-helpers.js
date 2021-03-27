@@ -2,7 +2,7 @@
 this helper will help to manage auth state 
 the way of storing, retrieving and deleting JWT credentials on the client-side */
 
-import { signout } from "../api-fetching/api-auth"
+import { logout } from "../api-fetching/api-auth.js"
 
 
 const auth = {
@@ -38,7 +38,7 @@ const auth = {
         cb()
 
         //optionally calling the signout API
-        signout().then((data) => {
+        logout().then((data) => {
             document.cookie = "t=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
         })
     }

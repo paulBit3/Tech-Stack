@@ -22,12 +22,18 @@ import authRoutes from './routes/auth.routes';
 /* modules for server side rendering */
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
-import StaticRouter from 'react-router-dom/StaticRouter';
-import CoreRouter from '../../components/CoreRouter';
+import CoreRouter from '../../frontend/components/CoreRouter';
+
+//a stateless router, will take the request url to match
+import { StaticRouter } from 'react-router-dom';
+
+
+
 //module to generate the CSS styles for the frontend component
 import { ServerStyleSheets, ThemeProvider } from '@material-ui/styles';
-import theme from '../../components/Theme';
+import theme from '../../frontend/components/Theme';
 
+/* End modules for server side rendering */
 
 //for devmode only. Comment out in production
 import devBundle from './devBundle';
@@ -44,17 +50,17 @@ const app = express();
 
 
 //for devmode only. Comment out in production
-devBundle.compile(app);
+//devBundle.compile(app)
 
 
 //parse body params
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
-app.use(compress());
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(cookieParser())
+app.use(compress())
 
 //secure apps
-app.use(helmet());
+app.use(helmet())
 
 //enable Crossing Origin Resource Sharing CORS
 app.use(cors())
@@ -68,9 +74,36 @@ app.use('/', userRoutes)
 app.use('/', authRoutes)
 
 
-//sending the template in the reponse to a GET requests for the'/' route
-app.get('/', (req, res) => {
-    res.status(200).send(Template())
+/* sending the template in the reponse to a GET requests for the'/' route */
+app.get('*', (req, res) => {
+    /* generating css markup using material-ui ServerStyleSheets and renderToString */
+
+    //creating a ServerStyleSheets instance
+    const sheets = new ServerStyleSheets()
+    //This context object contains the results of the render
+    const context = {}
+    //calling renderToString to return HTML string of react view
+    const markup = ReactDOMServer.renderToString(
+        sheets.collect(
+            <StaticRouter location={req.url} context={context}>
+                <ThemeProvider theme={theme}>
+                    <CoreRouter/>
+                </ThemeProvider>
+            </StaticRouter>
+        )
+    )
+
+    //check if there was a redirect rendered
+    if (context.url) {
+        return res.redirect(303, context.url)
+    }
+
+    //if there was no redirect, then we get the css string
+    const css = sheets.toString()
+    res.status(200).send(Template({
+        markup: markup,
+        css: css
+    }))
 })
 
 

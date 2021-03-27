@@ -32,18 +32,18 @@ const useStyles = makeStyles(theme => ({
 
 
 // our functional component defintion
-export default function Header() {
+export default function Home() {
     const classes = useStyles()
     return (
         <Card className={classes.card}>
             <Typography variant="h3" className={classes.title}>
-                TechStack
+                Welcome to your Tech Stack community
             </Typography>
             <CardMedia className={classes.media} image={backImg} title="Home Image"/>
             <Typography variant="body1" component="p" className={classes.credit} color="textSecondary"></Typography>
             <CardContent>
                 <Typography variant="body1" component="p">
-                    Welcome to  TechStack
+                    Discuss and share your Tech stack experience.
                 </Typography>
             </CardContent>
             

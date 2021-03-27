@@ -20,16 +20,6 @@ const config = {
         path: path.join(CURRENT_WORKING_DIR , '/dist'),
         publicPath: '/dist/' // Webpack dev middleware, if enabled, handles requests for this URL prefix
     },
-    plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoEmitOnErrorsPlugin()
-    ],
-    resolve:  {
-        alias: {
-            'react-dom': '@hot-loader/react-dom'
-        }
-    },
-
     module: {
         rules: [
             {
@@ -44,6 +34,24 @@ const config = {
                 use: 'file-loader'
             }
         ]
+    },
+    plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoEmitOnErrorsPlugin()
+    ],
+    resolve:  {
+        alias: {
+            'react-dom': '@hot-loader/react-dom'
+        }
+    },
+    devServer: {
+        contentBase: path.join(__dirname, 'public'),
+        watchContentBase: true,
+        publicPath: "/dist/",
+        historyApiFallback: true,
+        hot: true,
+        inline: true,
+        port: 3000,
     },
 }
 
