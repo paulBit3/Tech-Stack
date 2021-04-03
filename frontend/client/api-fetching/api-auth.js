@@ -5,9 +5,9 @@
 
 /* the signin method will take user sign-in data from the view component 
    then uses fetch to make a POST request to verify user with the backend */
-const login = async (user) => {
+const signin = async (user) => {
     try {
-        let response = await fetch('/auth/login/', {
+        let res = await fetch('/auth/signin/', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -16,9 +16,8 @@ const login = async (user) => {
             credentials: 'include',
             body: JSON.stringify(user)
         })
-      //return response from server as a promise 
-      //which may provide the JWT if sign-in was successful
-      return await response.json
+        //return response from server as a promise which may provide the JWT if sign-in was successful
+        return await res.json()
     } catch(err) {
         console.log(err)
     }
@@ -27,11 +26,12 @@ const login = async (user) => {
 
 /* the signout method will use fetch to make a GET request
    to the signout API endpoint on the sever  */
-const logout = async () => {
+const signout = async (url='/auth/signout/') => {
     try {
-        let response = await fetch('/auth/logout/', { method: 'GET' })
-      //return response from server as a promise
-      return await response.json()
+        let res = await fetch(url, { method: 'GET' })
+
+        //return response from server as a promise
+        return await res.json()
     } catch (err) {
         console.log(err)
     }
@@ -40,6 +40,6 @@ const logout = async () => {
 
 
 export {
-    login,
-    logout
+    signin,
+    signout
 }

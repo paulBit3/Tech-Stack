@@ -1,10 +1,10 @@
 /* definition of the controller methods to be executed 
 when a route request is received by the server */
 
-import User from '../models/user.model'
+import User from '../models/user.model';
 //lodash library when updating an exixting user with change value
-import extend from 'lodash/extend'
-import errorHandler from './../helper/dbErrorHandler'
+import extend from 'lodash/extend';
+import errorHandler from './../helper/dbErrorHandler';
 
 
 
@@ -39,7 +39,7 @@ const list = async (req, res) => {
         res.json(users)
     } catch (err) {
         return res.status(400).json({
-            error: "Could not retrieve user"
+            error: errorHandler.getErrorMessage(err)
         })
     }
 }
@@ -52,14 +52,14 @@ const userByID = async (req, res, next, id) => {
     try {
         let user = await User.findById(id)
         if (!user)
-          return res.status(400).json({
+          return res.status('400').json({
               error: "User not found"
           })
           //if user found
         req.profile = user
         next()
     } catch (err) {
-        return res.status(400).json({
+        return res.status('400').json({
             error: "Could not retrieve user"
         })
     }

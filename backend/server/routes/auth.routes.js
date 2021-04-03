@@ -4,18 +4,18 @@
 
 */
 
-import express from 'express'
-import authCtrl from '../controllers/auth.controller.js'
-import config from '../../../config/config'
+import express from 'express';
+import authCtrl from '../controllers/auth.controller.js';
+import config from '../../../config/config';
 
 
 const expressJwt =  require('express-jwt');
 
 const router = express.Router()
 
-router.route('/auth/login').post(authCtrl.login)
+router.route('/auth/signin').post(authCtrl.signin)
 
-router.route('/auth/logout').get(authCtrl.logout)
+router.route('/auth/signout').get(authCtrl.signout)
 
 
 expressJwt({

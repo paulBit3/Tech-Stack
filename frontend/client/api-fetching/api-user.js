@@ -6,18 +6,18 @@
 /*---the create method take user data from 
     view component, then fetch to make POST call at the
     create API route '/api/users' */
-const create = async (user) => {
+const create = async (user, url = '/api/users/') => {
     try {
-        let response = await fetch('/api/users/', {
+        let res = await fetch(url, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify(user)
         })
-      //return response from server as a promise
-      return await response.json()
+        //return response from server as a promise
+        return await res.json()
     } catch (err) {
         console.log(err)
     }
@@ -26,34 +26,35 @@ const create = async (user) => {
 
 /* ---the list method. this method uses fetch to make a GET request 
       to  all the users in the DB */
-const list = async (signal) => {
+const list = async (signal, url='/api/users/') => {
     try {
-        let response = await fetch('/api/users/', {
+        let res = await fetch(url, {
             method: 'GET',
             signal: signal,
         })
-      //return response from server as a promise
-      return await response.json()
+        //return response from server as a promise
+        return await res.json()
     } catch(err) {
         console.log(err)
     }
 }
 
 
-/* ---read method uses fetch to make a GET request to retrive a single user profile */
+/* ---read method uses fetch to make a GET request to retrive a single user profile 
+ the JWT is attached to GET fetch call in the Authorization*/
 const read = async (params, credentials, signal) => {
     try {
-        let response = await fetch('/api/users/' + params.userId, {
+        let res = await fetch('/api/users/' + params.userId, {
             method: 'GET',
             signal: signal,
             headers: {
                 'Accept': 'application/json',
-                'Content-type': 'application/json',
-                'Authorization': 'Bearer' + credentials.t //the JWT is attached to GET fetch call in the Authorization
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + credentials.t
             }
         })
-      //return response from server as a promise
-      return await response.json()
+        //return response from server as a promise
+        return await res.json()
     } catch(err) {
         console.log(err)
     }
@@ -64,17 +65,17 @@ const read = async (params, credentials, signal) => {
    to make a PUT request to update existing data in the backend */
 const update = async (params, credentials, user) => {
     try {
-        let response = await fetch('/api/users/' + params.userId, {
+        let res = await fetch('/api/users/' + params.userId, {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer' + credentials.t
+                'Authorization': 'Bearer ' + credentials.t,
             },
             body: JSON.stringify(user)
-           })
-      //return response from server as a promise
-      return await response.json()
+        })
+           //return response from server as a promise
+        return await res.json()
     } catch(err) {
         console.log(err)
     }
@@ -85,16 +86,16 @@ const update = async (params, credentials, user) => {
   a specific data from the database and use fetch to make a DELETE request */
 const remove = async (params, credentials) => {
     try {
-        let response = await fetch('/api/users/', + params.userId, {
+        let res = await fetch('/api/users/', + params.userId, {
             method: 'DELETE',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer' + credentials.t
+                'Authorization': 'Bearer ' + credentials.t,
             }
         })
-      //return response from server as a promise
-      return await response.json()
+        //return response from server as a promise
+        return await res.json()
     } catch(err) {
         console.log(err)
     }

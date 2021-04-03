@@ -1,6 +1,6 @@
 /*------------ configuring express ----------------*/
 
-import express from 'express';
+import express, { response } from 'express';
 import path from 'path';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
@@ -42,8 +42,44 @@ import devBundle from './devBundle';
 
 // const expressJwt =  require('express-jwt');
 
+
+
+
 //serving static file with express
 const CURRENT_WORKING_DIR= process.cwd()
+
+// This function fired every time the server-side receives a request.
+const  handleRender = (req, res) => {
+    //creating a ServerStyleSheets instance
+   const sheets = new ServerStyleSheets();
+
+   //This context object contains the results of the render
+   const context = {}
+   
+   // Render the component to a string
+   const html = ReactDOMServer.renderToString(
+       sheets.collect(
+           <StaticRouter location={req.url} context={context}>
+               <ThemeProvider theme={theme}>
+                 <CoreRouter />
+               </ThemeProvider>,
+           </StaticRouter>
+       ),
+   );
+
+   //Grab the CSS from the sheets.
+   const css = sheets.toString();
+
+   
+   //check if there was a redirect rendered
+   if (context.url) {
+       return res.redirect(303, context.url)
+   }
+
+   //Send the rendered page back to the client
+   res.send(Template( html, css ));
+}
+
 
 //express app
 const app = express();
@@ -75,43 +111,17 @@ app.use('/', authRoutes)
 
 
 /* sending the template in the reponse to a GET requests for the'/' route */
-app.get('*', (req, res) => {
-    /* generating css markup using material-ui ServerStyleSheets and renderToString */
+app.get("*", (handleRender))
 
-    //creating a ServerStyleSheets instance
-    const sheets = new ServerStyleSheets()
-    //This context object contains the results of the render
-    const context = {}
-    //calling renderToString to return HTML string of react view
-    const markup = ReactDOMServer.renderToString(
-        sheets.collect(
-            <StaticRouter location={req.url} context={context}>
-                <ThemeProvider theme={theme}>
-                    <CoreRouter/>
-                </ThemeProvider>
-            </StaticRouter>
-        )
-    )
-
-    //check if there was a redirect rendered
-    if (context.url) {
-        return res.redirect(303, context.url)
-    }
-
-    //if there was no redirect, then we get the css string
-    const css = sheets.toString()
-    res.status(200).send(Template({
-        markup: markup,
-        css: css
-    }))
-})
-
+// This is fired every time the server-side receives a request.
+//app.use(handleRender);
 
 // Catch unauthorized errors
 /* express-jwt throws an error named UnauthorizedError when a token cannot be validated for some reason */
 app.use((err, req, res, next) => {
     if (err.name === 'UnauthorizedError') {
         res.status(401).json({"error" : err.name + ":" + err.message})
+        console.log(err)
     } else if (err) {
         res.status(400).json({"error" : err.name + ":" + err.message})
         console.log(err)

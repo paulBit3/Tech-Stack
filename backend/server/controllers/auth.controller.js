@@ -1,9 +1,9 @@
 /* implementing authentication controller this will provide JWT 
 and express-jwt functionality to protect user API endpoints */
-import User from '../models/user.model'
-import jwt from 'jsonwebtoken'
-import expressJwt from 'express-jwt'
-import config from '../../../config/config'
+import User from '../models/user.model';
+import jwt from 'jsonwebtoken';
+import expressJwt from 'express-jwt';
+import config from '../../../config/config';
 
 
 /* const jwt = require('jsonwebtoken');
@@ -15,20 +15,20 @@ function  auth controller function.
 We implement user auth using JSON Web Tokens*/
 
 //API endpoint to sign in a user
-const login = async (req, res) => {
+const signin = async (req, res) => {
     try {
         //POST request receive the email and password
         let user = await User.findOne({ 
             "email": req.body.email 
         })
         if (!user)
-          return res.status(401).json({ 
+          return res.status('401').json({
               error: "user not found" 
-          })
+        })
         
           //verifying the password received in req.body from the client
         if (!user.authenticate(req.body.password)) {
-            return res.status(401).send({ 
+            return res.status('401').send({ 
                 error: "email and password don't match." 
             })
         }
@@ -42,6 +42,8 @@ const login = async (req, res) => {
         res.cookie("t", token, {
             expire: new Date() + 9999
         })
+        // console.log(token);
+        // console.log(user);
 
         return res.json({
             token, 
@@ -51,22 +53,25 @@ const login = async (req, res) => {
                 email: user.email
             }
         })
+        
+        
 
     } catch (err) {
         
-        return res.status(401).json({
+        return res.status('401').json({
             error: "Could not login"
         })
 
     }
+    
 }
 
 //API endpoint to signout a user
 /* when Express app gets a GET request '/auth/signout',
  it execute the signout controller function */
-const logout = (req, res) => {
+const signout = (req, res) => {
     res.clearCookie("t")
-    return res.status(200).json({
+    return res.status('200').json({
         message: "you are logged out."
     })
 }
@@ -89,7 +94,7 @@ This method will check authenticated user the controller function is allowed to 
 const hasAuthorization = (req, res, next) => {
     const authorized = req.profile && req.auth && req.profile._id == req.auth._id
     if (!(authorized)) {
-        return res.status(403).json({
+        return res.status('403').json({
             error: "User is not authorized"
         })
     }
@@ -99,8 +104,8 @@ const hasAuthorization = (req, res, next) => {
 
 
 export default {
-    login,
-    logout,
+    signin,
+    signout,
     requireSignin,
     hasAuthorization
 }

@@ -1,10 +1,10 @@
 /* This is a root template file which will render the HTML with React components.
 This template will be rendered in the browser when the server receives a request
 to the URL, and the div element with ID "root" will contains our React component.
-We added the markup and the css that we generated on the server
+We added the html markup and the css that we generated on the server
 */
 
-export default ({markup, css}) => {
+export default ({html, css}) => {
     return `<!doctype html>
     <html lang="en">
      <head>
@@ -24,10 +24,10 @@ export default ({markup, css}) => {
              color: #987079;
            }
        </style>
+       <style id="jss-server-side">${css}</style>
      </head>
      <body>
-      <div id="root">${markup}</div>
-      <style id="jss-server-side">${css}</style>
+      <div id="root">${html}</div>
       <script src="dist/bundle.js"></script>
      </body>
     </html>`

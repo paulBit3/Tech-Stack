@@ -1,17 +1,18 @@
 /* this component will handled method to delete a user via profile component */
 import React, { useState } from 'react';
 
-import ProtoTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
-import Dialog from '@material-ui/icons/Delete';
+import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import auth from './../client/helpers/auth-helpers';
-import remove from './../client/api-fetching/api-user.js';
+import {remove} from './../client/api-fetching/api-user.js';
 import { IconButton } from '@material-ui/core';
+import { Redirect } from 'react-router-dom';
 
 
 /* our delete user function. this component will receive props from the parent component.
@@ -80,5 +81,5 @@ export default function DeleteUser(props) {
 
 //validating props with PropTypes
 DeleteUser.propTypes = {
-    userId: ProtoTypes.string.isRequired
+    userId: PropTypes.string.isRequired
 }

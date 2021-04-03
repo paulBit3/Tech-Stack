@@ -4,9 +4,9 @@
 /*the component load when the user is authenticated by calling 
   isAuthenticated method otherwise we redirect the user login component*/
 
-import React, { Component } from 'react'
-import { Route, Redirect } from 'react-router-dom'
-import auth from '../client/helpers/auth-helpers'
+import React, { Component } from 'react';
+import { Route, Redirect } from 'react-router-dom';
+import auth from '../client/helpers/auth-helpers';
 
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
@@ -15,8 +15,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
         <Component {...props} />
     ) : (
         <Redirect to={{
-            pathname: '/login',
-            state: { from: props.location }
+          pathname: '/signin',
+          state: { from: props.location }
         }}/>
     )
   )}/>

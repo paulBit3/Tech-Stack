@@ -1,7 +1,6 @@
 /* This component will display a single user inforation in the view 
  */
 import React, { useState, useEffect } from 'react';
-import { Redirect, Link} from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import List from '@material-ui/core/List';
@@ -14,11 +13,12 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import Edit from '@material-ui/icons/Edit';
 import Person from '@material-ui/icons/Person';
+import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
-
+import DeleteUser from './DeleteUser';
 import auth from './../client/helpers/auth-helpers';
-import {read} from './../client/api-fetching/api-user.js'
-
+import {read} from './../client/api-fetching/api-user.js';
+import { Redirect, Link} from 'react-router-dom';
 
 
 
@@ -68,14 +68,15 @@ export default function Profile({ match }){
     // initialize state an empty user and set redirectToSignin to false
     const [user, setUser] = useState({})
     const [redirectToSignin, setRedirectToSignin] = useState(false)
+    
+    //get jwt from sessionstorage with isauthenicated method
+    const jwt = auth.isAuthenticated()
 
     //fetch user information by using useEffect hook
     useEffect(() => {
         const abortController = new AbortController()
         const signal = abortController.signal
 
-        //get jwt from sessionstorage with isauthenicated method
-        const jwt = auth.isAuthenticated()
         //calling read method
         read({
             userId: match.params.userId
@@ -95,7 +96,7 @@ export default function Profile({ match }){
 
      //if the current user is not authenticated, redirect
      if (redirectToSignin) {
-         return <Redirect to ='/signin'/>
+        return <Redirect to ='/signin'/>
      }
      
      return (
@@ -113,7 +114,7 @@ export default function Profile({ match }){
                      <ListItemText primary={user.name} secondary={user.email} /> {
                          auth.isAuthenticated().user && auth.isAuthenticated().user._id == user._id &&
                          (<ListItemSecondaryAction>
-                             <Link to={"/Components/edit/" + user._id}>
+                             <Link to={"/user/edit/" + user._id}>
                                  <IconButton aria-label="Edit" color="primary">
                                      <Edit/>
                                  </IconButton>
@@ -124,9 +125,8 @@ export default function Profile({ match }){
                  </ListItem>
                  <Divider/>
                  <ListItem>
-                     <ListItemText primary={"Joined:" + (
-                         new Date(user.created)).toDateString()}>
-                     </ListItemText>
+                     <ListItemText primary={"Joined: " + (
+                        new Date(user.created)).toDateString()}/>
                  </ListItem>
              </List>
             {/* calling copyright function here */}

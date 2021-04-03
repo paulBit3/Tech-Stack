@@ -7,17 +7,17 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import HomeIcon from '@material-ui/icons/Home';
 import Button from '@material-ui/core/Button';
-import { Link, withRouter } from 'react-router-dom';
-import { createMemoryHistory } from 'history';
-
 import auth from './../client/helpers/auth-helpers';
+import { Link, withRouter } from 'react-router-dom';
+//import { createMemoryHistory } from 'history';
+
 
 //higher-order component
 // import { withRouter } from 'react-router';
 
 
 
-const history = createMemoryHistory();
+//const history = createMemoryHistory();
 
 
 /* highlight the link that matches the 
@@ -75,8 +75,7 @@ const Header = withRouter(({history}) => (
                             <Link to={"/user/" + auth.isAuthenticated().user._id}>
                                 <Button 
                                   color="inherit" 
-                                  style={isActive(history, "/user/" + auth.isAuthenticated().user._id)}
-                                  >My Profile</Button>
+                                  style={isActive(history, "/user/" + auth.isAuthenticated().user._id)}>My Profile</Button>
                             </Link>
 
                             {/* <MenuItem onClick={handleMenuClose}>Profile</MenuItem> */}
@@ -92,4 +91,4 @@ const Header = withRouter(({history}) => (
           
         
 ))
-export default Header
+export default Header;

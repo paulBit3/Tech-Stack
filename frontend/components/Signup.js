@@ -7,24 +7,18 @@ import Icon from '@material-ui/core/Icon';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
-import { green } from '@material-ui/core/colors';
-import Container from '@material-ui/core/Container';
+import { makeStyles } from '@material-ui/core/styles';
+import { Container }from '@material-ui/core';
 import {create} from '../client/api-fetching/api-user.js';
-
-
-
-
-
+import { Link } from 'react-router-dom';
 
 
 
@@ -59,9 +53,6 @@ const useStyles = makeStyles((theme) => ({
         
     },
     checked: {
-        '&, & + $label': {
-            color: 'blue',
-        },
     },
     label: {},
     submit: {
@@ -70,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
     //checked: {},
 }));
 
-const GreenCheckbox = withStyles({
+/* const GreenCheckbox = withStyles({
     root: {
       color: green[400],
       '&$checked': {
@@ -80,6 +71,7 @@ const GreenCheckbox = withStyles({
     checked: {},
   })((props) => <Checkbox color="default" {...props} />);
   
+ */
 
 //our copyright function
 function Copyright(){
@@ -102,55 +94,51 @@ function Copyright(){
 export default function Signup() {
     const classes = useStyles();
     //initializing the state using the useState hook
-    const [state, setState] = useState({
+    const [values, setValues] = useState({
         name: '',
         password: '',
         email: '',
         open: false,
         error: '',
-        checkedA: true,
-    });
+    })
+
+    const [ checked, setChecked ] = useState();
    
     /* defining our handler functions to be called */
 
     //this function takes the new value in the input and sets it as the state
    /*  */
-    const handleInputChange =  (event) => {
-        const {name, value } = event.target;
-        setState({ 
-            ...state, 
-            [name]: value,
-        });
+    const handleInputChange = name => event => {
+        setValues({ ...values, [name]: event.target.value })
     };
     
 
     const handleChange = (event) => {
-        const { name, value } = event.target;
-        setState({ 
-            ...state, 
-            [name]: value.checked, 
-        });
+        setChecked(event.target.checked);
     };
     
 
     //this function takes the input value from the state and calls the 
     // create fetch method to signup the user with the backend
-    const clickSubmit = () => {
+    const onSubmit = (e) => {
+        e.preventDefault();
         const user = {
-            name: state.name || undefined,
-            email: state.email || undefined,
-            password: state.password || undefined
+            name: values.name || undefined,
+            email: values.email || undefined,
+            password: values.password || undefined
         }
         create(user).then((data) => {
             if (data.error) {
-                setState({ ...state, error: data.error})
+                setValues({ ...values, error: data.error })
             } else {
-                setState({ ...state, error: '', open: true})
+                setValues({ ...values, error: '', open: true })
             }
-        });
-    };
+            console.log(user)
+        })
+    }
 
     return (
+        
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
@@ -160,7 +148,7 @@ export default function Signup() {
                 <Typography component="h1" variant="h5" className={classes.title}>
                     Sign up
                 </Typography>
-                <form className={classes.form}>
+                <form className={classes.form} onSubmit={onSubmit}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextField
@@ -169,11 +157,12 @@ export default function Signup() {
                             fullWidth
                             id="name"
                             label="Full Name"
-                            value={state.name}
-                            onChange={handleInputChange}
+                            value={values.name}
+                            onChange={handleInputChange('name')}
                             name="fullName"
                             autoComplete="fname"
                             InputLabelProps={{ shrink: true }}
+                            placeholder="Full Name"
                             autoFocus
                             />
                         </Grid>
@@ -184,10 +173,11 @@ export default function Signup() {
                             fullWidth
                             id="email"
                             label="Email Address"
-                            value={state.email}
-                            onChange={handleInputChange}
+                            value={values.email}
+                            onChange={handleInputChange('email')}
                             name="email"
                             autoComplete="email"
+                            placeholder="Email"
                             InputLabelProps={{ shrink: true }} 
                             />
                         </Grid>
@@ -199,10 +189,11 @@ export default function Signup() {
                             type="password"
                             id="password"
                             label="Password"
-                            value={state.password}
-                            onChange={handleInputChange}
+                            value={values.password}
+                            onChange={handleInputChange('password')}
                             name="password"
                             autoComplete="current-password"
+                            placeholder="Password"
                             InputLabelProps={{ shrink: true }} 
                             />
                         </Grid>
@@ -212,9 +203,9 @@ export default function Signup() {
                               control={
                                 <Checkbox  
                                  color="primary" 
-                                 checked={state.checkedA}
+                                 checked={values.checked}
                                  onChange={handleChange}
-                                 name="checkedA"
+                                 name="checked"
                                 />
                               } 
                               label="I agree with Oficy Inc.'s terms of service and privacy policy" 
@@ -222,21 +213,21 @@ export default function Signup() {
                         </Grid>
                         <br/>
                         {
-                        state.error && (<Typography component="p" color="error">
+                        values.error && (<Typography component="p" color="error">
                             <Icon color="error" className={classes.error}>error</Icon>
-                            {state.error}</Typography>)
+                            {values.error}</Typography>)
                         }
                     </Grid>
                     <Button
-                        type="submit"
+                        type="submit" 
                         fullWidth
-                        variant="contained"
-                        color="primary"
-                        onClick={clickSubmit}
+                        variant="contained" 
+                        color="primary" 
                         className={classes.submit}
-                    >
+                        >
                         Sign Up
-                        </Button>
+                    </Button>
+
                     <Grid container justify="flex-end">
                         <Grid item>
                             Already have an account?
@@ -246,7 +237,7 @@ export default function Signup() {
                         </Grid>
                     </Grid>
                 </form>
-                <Dialog open={state.open} disableBackdropClick={true}>
+                <Dialog open={values.open} disableBackdropClick={true}>
                     <DialogTitle>New Account</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
@@ -262,6 +253,7 @@ export default function Signup() {
                     </DialogActions>
                 </Dialog>
             </div>
+
             {/* calling copyright function here */}
             <Box mt={5}><Copyright /></Box>
         </Container>

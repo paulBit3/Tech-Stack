@@ -41,6 +41,10 @@ const config =  {
         inline: true,
         port: 3000,
     },
+    performance: {
+        maxEntrypointSize: 512000,
+        maxAssetSize: 512000
+    }
 }
 
 module.exports = config

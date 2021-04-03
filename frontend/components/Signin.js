@@ -6,8 +6,6 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Icon from '@material-ui/core/Icon';
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
@@ -16,7 +14,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from "@material-ui/core/styles";
 import Container from '@material-ui/core/Container';
 
-import {login} from '../client/api-fetching/api-auth.js';
+import auth from '../client/helpers/auth-helpers.js';
+import { Redirect } from 'react-router-dom';
+import {signin} from '../client/api-fetching/api-auth.js';
 
 
 
@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
         marginRight: theme.spacing(1),
         
     },
-    submit: {
+    button: {
         margin: theme.spacing(3, 0, 2),
     },
 }));
@@ -88,18 +88,19 @@ export default function Signin(props) {
 
      //this function takes the input value from the state and calls the 
     // create fetch method to signup the user with the backend
-    const clickSubmit = () => {
+    const onSubmit = (e) => {
+        e.preventDefault();
         const user = {
             email: values.email || undefined,
             password: values.password || undefined
         }
 
-        login(user).then((data) => {
+        signin(user).then((data) => {
             if (data.error) {
                 setValues({ ...values, error: data.error })
             } else {
                 auth.authenticate(data, () => {
-                    setValues({ ...values, error: '', redirectToReferrer: true})
+                    setValues({ ...values, error: '', redirectToReferrer: true })
                 })
             }
         })
@@ -131,7 +132,7 @@ export default function Signin(props) {
                <Typography component="h1" variant="h5">
                    Sign in
                </Typography>
-               <form className={classes.form}>
+               <form className={classes.form} onSubmit={ onSubmit } >
                     <Grid container spacing={2}>
 
                         <Grid item xs={12}>
@@ -145,7 +146,7 @@ export default function Signin(props) {
                             label="Email Address"
                             value={values.email}
                             onChange={handleChange('email')}
-                            InputLabelProps={{ shrink: true }} 
+                            InputLabelProps={{ shrink: true }}
                             autoFocus />
                         </Grid>
                         <Grid item xs={12}>
@@ -160,7 +161,7 @@ export default function Signin(props) {
                             label="Password"
                             value={values.password}
                             onChange={handleChange('password')}
-                            InputLabelProps={{ shrink: true }} 
+                            InputLabelProps={{ shrink: true }}
                             />
                         </Grid>
 
@@ -170,16 +171,17 @@ export default function Signin(props) {
                                 {values.error}</Typography>)
                         }
                     </Grid>
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        onClick={clickSubmit}
-                        className={classes.submit}
-                    >
-                        Sign In
+                    <Grid container item justify="flex-end">
+                        <Button 
+                            fullWidth 
+                            variant="contained" 
+                            color="primary" 
+                            className={classes.button} 
+                            type="submit" >
+                            Sign In
                         </Button>
+                    </Grid>
+                        
                     <Grid container>
                         <Grid item xs>
                             <Link href="#" variant="body2">

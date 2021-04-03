@@ -1,10 +1,9 @@
 import React from 'react';
 import CoreRouter from './CoreRouter';
 
-/* wrapping root component with themeprovider and browserrouter */
- 
+
 //enabling frontend routing with react router
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 
  //acessing to material-ui theme
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -29,12 +28,11 @@ const App = () => {
         }
     }, [])
     return (
-        <BrowserRouter>
+        <Router>
           <ThemeProvider theme={theme}>
-              
               <CoreRouter/>
           </ThemeProvider>
-        </BrowserRouter>
+        </Router>
     )
 }
 

@@ -9,7 +9,8 @@ import Signup from './Signup';
 import Signin from './Signin';
 import Profile from './Profile';
 import EditProfile from './EditProfile';
-import Header from './Header'
+import PrivateRoute from './PrivateRoute';
+import Header from './Header';
 
 
 
@@ -38,7 +39,7 @@ const CoreRouter = () => {
                 <Route path="/signin" component={Signin} />
 
                 {/* to add the Edit Profile component to the App. edit path is matched 1st */}
-                <Route path="/user/edit/:userId" component={EditProfile} />
+                <PrivateRoute path="/user/edit/:userId" component={EditProfile} />
 
                 {/* to add the Profile component to the App */}
                 <Route path="/user/:userId" component={Profile} />
