@@ -1,4 +1,4 @@
-# Tech-Stack-App
+# Tech-Stack-App - Developed using React, Node, Express and MongoDB
 Share Tech Stack topics and your FullStack experience with friends and coworkers.
 ![image](https://user-images.githubusercontent.com/43505777/112428771-ab1da180-8d09-11eb-866d-508cd3b752fc.png)
 ![Tech_Stack_Signup1_1](https://user-images.githubusercontent.com/43505777/113466529-4bf31780-9402-11eb-8064-ea8aa5e0e3ef.JPG)
